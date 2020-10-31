@@ -9,16 +9,15 @@ get_accuracy <- function(all_train_data, test_data, clss, perc) {
   nt <- as.integer(nrow(rnd_data) * perc)
   train_data <- rnd_data[1:nt, ]
   
-  knn_clsfr <- train.kknn(as.formula(paste(clss, '~ .')), train_data, kmax = 15, 
-                          kernel = c("triangular", "rectangular", "epanechnikov", "optimal"), 
-                          distance = 1)
+  knn_fit <- fitted(kknn(as.formula(paste(clss, '~ .')), train_data, 
+                         test_data, k = 13, kernel = "triangular", distance = 2))
   
-  tbl <- table(predict(knn_clsfr, test_data), test_data[[clss]])
+  tbl <- table(test_data[[clss]], knn_fit)
   (tbl[1] + tbl[4]) / nrow(test_data)
 }
 
 
-get_mean_accuracy <- function(all_train_data, test_data, clss, perc, times = 10) {
+get_mean_accuracy <- function(all_train_data, test_data, clss, perc, times = 50) {
   mean(sapply(1:times, function(time) get_accuracy(all_train_data, test_data, clss, perc)))
 }
 
