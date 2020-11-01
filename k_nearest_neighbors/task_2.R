@@ -9,7 +9,7 @@ k_kernel_test <- function(all_data) {
                       data = glass, 
                       kmax = 15, 
                       kernel = c("rectangular", "triangular", "epanechnikov", "optimal"),
-                      distance = 2)
+                      distance = 1)
   plot(clsfr)
   
 }
@@ -29,8 +29,40 @@ distance_test <- function(all_data, dist) {
 
 k_kernel_test(glass)
 
-
 distances <- 1:8
 misclass <- sapply(distances, function(dist) distance_test(glass, dist))
-
 plot(distances, misclass, xlab = 'distance', ylab = 'misclassification')
+
+
+get_type <- function(all_data, sample) {
+  fit_data <- fitted(kknn(Type ~ .,
+                     all_data,
+                     sample,
+                     kernel = "optimal",
+                     distance = 1))
+  
+  as.integer(as.character(fit_data))
+}
+
+smpl <- data.frame("RI" = c(1.516),
+                   "Na" = c(11.7),
+                   "Mg" = c(1.01),
+                   "Al" = c(1.19),
+                   "Si" = c(72.29),
+                   "K"  = c(0.43),
+                   "Ca" = c(11.44),
+                   "Ba" = c(0.02),
+                   "Fe" = c(0.1),
+                   "Type" = c(1))
+
+print(get_type(glass, smpl))
+
+
+get_updated_sample <- function(sample, feature) {
+  sample[[feature]] <- 0
+  return(sample)
+}
+
+for (nm in colnames(smpl)[-ncol(smpl)]) {
+  print(paste(nm, as.character(get_type(glass, get_updated_sample(smpl, nm))), sep = " - "))
+}
