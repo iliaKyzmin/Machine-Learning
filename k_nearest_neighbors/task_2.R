@@ -36,10 +36,10 @@ plot(distances, misclass, xlab = 'distance', ylab = 'misclassification')
 
 get_type <- function(all_data, sample) {
   fit_data <- fitted(kknn(Type ~ .,
-                     all_data,
-                     sample,
-                     kernel = "optimal",
-                     distance = 1))
+                          all_data,
+                          sample,
+                          kernel = "optimal",
+                          distance = 1))
   
   as.integer(as.character(fit_data))
 }
