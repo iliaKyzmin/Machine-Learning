@@ -6,16 +6,14 @@ glass <- glass[-1]
 
 k_kernel_test <- function(all_data) {
   clsfr <- train.kknn(Type ~ ., 
-                      data = glass, 
+                      data = all_data, 
                       kmax = 15, 
                       kernel = c("rectangular", "triangular", "epanechnikov", "optimal"),
                       distance = 1)
   plot(clsfr)
-  
 }
 
 distance_test <- function(all_data, dist) {
-  
   clsfr <- train.kknn(Type ~ ., 
                       all_data, 
                       kmax = 15, 
@@ -41,7 +39,7 @@ get_type <- function(all_data, sample) {
                           kernel = "optimal",
                           distance = 1))
   
-  as.integer(as.character(fit_data))
+  as.character(fit_data)
 }
 
 smpl <- data.frame("RI" = c(1.516),
@@ -55,14 +53,8 @@ smpl <- data.frame("RI" = c(1.516),
                    "Fe" = c(0.1),
                    "Type" = c(1))
 
-print(get_type(glass, smpl))
+print(as.integer(get_type(glass, smpl)))
 
-
-get_updated_sample <- function(sample, feature) {
-  sample[[feature]] <- 0
-  return(sample)
-}
-
-for (nm in colnames(smpl)[-ncol(smpl)]) {
-  print(paste(nm, as.character(get_type(glass, get_updated_sample(smpl, nm))), sep = " - "))
+for (feature_ind in 1:(ncol(glass) - 1)) {
+  print(paste(colnames(glass)[feature_ind], get_type(glass[-feature_ind], smpl[-feature_ind]), sep = " - "))
 }
