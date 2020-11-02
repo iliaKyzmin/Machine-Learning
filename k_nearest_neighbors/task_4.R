@@ -46,8 +46,8 @@ fill_fare_na <- function(some_data) {
 
 train_data <- fill_age_na(train_data)
 test_data <- fill_age_na(test_data)
-#test_data <- fill_fare_na(test_data)
-#train_data$Embarked[is.na(train_data$Embarked)] <- Mode(train_data$Embarked, na.rm = T)
+test_data <- fill_fare_na(test_data)
+train_data$Embarked[is.na(train_data$Embarked)] <- Mode(train_data$Embarked, na.rm = T)
 
 
 # With distance = 2 score is lower
