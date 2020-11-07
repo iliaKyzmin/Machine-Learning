@@ -50,8 +50,7 @@ smpl <- data.frame("RI" = c(1.516),
                    "K"  = c(0.43),
                    "Ca" = c(11.44),
                    "Ba" = c(0.02),
-                   "Fe" = c(0.1),
-                   "Type" = c(1))
+                   "Fe" = c(0.1))
 
 print(as.integer(get_type(glass, smpl)))
 

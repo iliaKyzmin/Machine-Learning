@@ -7,13 +7,15 @@ test_data <- read.csv('data/test.csv', stringsAsFactors = T, na.strings = c('NA'
 colSums(is.na(train_data))
 colSums(is.na(test_data))
 
-test_ids <- test_data$PassengerI
+test_ids <- test_data$PassengerId
 
 # With columns SibSp and Parch - 0.76555
 # Without                      - 0.78468
 # Without column Embarked      - 0.74641
 train_data <- subset(train_data, select = -c(PassengerId, Name, Cabin, Ticket, SibSp, Parch))
 test_data <- subset(test_data, select = -c(PassengerId, Name, Cabin, Ticket, SibSp, Parch))
+
+
 
 
 fill_age_na <- function(some_data) {
