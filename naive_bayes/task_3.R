@@ -15,13 +15,7 @@ train_data$Survived <- as.factor(train_data$Survived)
 
 
 fill_age_na <- function(some_data) {
-  some_data$Age[is.na(some_data$Age)] <- median(some_data$Age, na.rm = T)
-  return(some_data)
-}
-
-
-fill_fare_na <- function(some_data) {
-  some_data$Fare[is.na(some_data$Fare)] <- median(some_data$Fare, na.rm = T)
+  some_data$Age[is.na(some_data$Age)] <- mean(some_data$Age, na.rm = T)
   return(some_data)
 }
 
