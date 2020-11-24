@@ -1,7 +1,7 @@
 library(e1071)
 
-train_data <- read.table('data/svmdata3.txt', sep = '\t', header = T, stringsAsFactors = T)
-test_data <- read.table('data/svmdata3test.txt', sep = '\t', header = T, stringsAsFactors = T)
+train_data <- read.table('data/svmdata4.txt', sep = '\t', header = T, stringsAsFactors = T)
+test_data <- read.table('data/svmdata4test.txt', sep = '\t', header = T, stringsAsFactors = T)
 
 find_optimal_kernel <- function(kernel) {
   svm_clsfr <- svm(Colors ~ ., 
@@ -33,6 +33,6 @@ get_pol_error <- function(degree) {
   return(1. - sum(diag(tbl)) / nrow(test_data))
 }
 
-for (deg in 1:20) {
+for (deg in 1:10) {
   print(paste('Degree ', deg, ' - ', get_pol_error(deg)))
 }
