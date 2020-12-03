@@ -1,7 +1,21 @@
 library(e1071)
 
-train_data <- read.table('data/svmdata4.txt', sep = '\t', header = T, stringsAsFactors = T)
-test_data <- read.table('data/svmdata4test.txt', sep = '\t', header = T, stringsAsFactors = T)
+train_data <- read.table('data/svmdata3.txt', sep = '\t', header = T, stringsAsFactors = T)
+
+plot_clsfr <- function(clsfr) {
+  
+  area_pallete <- function(n = 3) {
+    colors <- rainbow(n)
+    colors[1:2] <- c("#e2fee2", "pink")
+    return(colors) 
+  }
+
+  plot(clsfr, 
+      train_data,
+      grid = 250,
+      symbolPalette = c("darkgreen", "red"),
+      color.palette = area_pallete)
+}
 
 find_optimal_kernel <- function(kernel) {
   svm_clsfr <- svm(Colors ~ ., 
@@ -10,9 +24,12 @@ find_optimal_kernel <- function(kernel) {
                    cost = 1,
                    kernel = kernel)
   
-    pred <- predict(svm_clsfr, test_data)
-    tbl <- table(pred, test_data$Color)
-    return(1. - sum(diag(tbl)) / nrow(test_data))
+    pred <- predict(svm_clsfr, train_data)
+    tbl <- table(pred, train_data$Color)
+    
+    
+    plot_clsfr(svm_clsfr)
+    return(1. - sum(diag(tbl)) / nrow(train_data))
 }
 
 print(paste("Polynomial - ", find_optimal_kernel("polynomial")))
@@ -28,9 +45,9 @@ get_pol_error <- function(degree) {
                    kernel = "polynomial",
                    degree = degree)
   
-  pred <- predict(svm_clsfr, test_data)
-  tbl <- table(pred, test_data$Color)
-  return(1. - sum(diag(tbl)) / nrow(test_data))
+  pred <- predict(svm_clsfr, train_data)
+  tbl <- table(pred, train_data$Color)
+  return(1. - sum(diag(tbl)) / nrow(train_data))
 }
 
 for (deg in 1:10) {

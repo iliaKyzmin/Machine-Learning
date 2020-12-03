@@ -16,7 +16,7 @@ find_c_with_zero_error <- function(data_train, data_test) {
                      cost = cost,
                      kernel = "linear")
     pred <- predict(svm_clsfr, data_test)
-    tbl <- table(pred, data_test$Color)
+    tbl <- table(pred, data_test$Colors)
     
     error <- 1. - sum(diag(tbl)) / nrow(data_test)
     cost <- cost + 1
@@ -24,5 +24,33 @@ find_c_with_zero_error <- function(data_train, data_test) {
   return(cost - 1)
 }
 
-print(paste("Train minimal C - ", find_c_with_zero_error(train_data, train_data)))
-print(paste("Test minimal C - ", find_c_with_zero_error(train_data, test_data)))
+c_train_zero <- find_c_with_zero_error(train_data, train_data)
+c_test_zero <- find_c_with_zero_error(train_data, test_data)
+print(paste("Train minimal C - ", c_train_zero))
+print(paste("Test minimal C - ", c_test_zero))
+
+
+
+plot_clsfr <- function(cost) {
+  svm_clsfr <- svm(Colors ~ ., 
+                   data = train_data,
+                   type = "C-classification",
+                   cost = cost,
+                   kernel = "linear")
+  
+  area_pallete <- function(n = 3) {
+    colors <- rainbow(n)
+    colors[1:2] <- c("#e2fee2", "pink")
+    return(colors) 
+  }
+  
+  plot(svm_clsfr, 
+       train_data,
+       grid = 250,
+       symbolPalette = c("darkgreen", "red"),
+       color.palette = area_pallete)
+}
+
+
+plot_clsfr(c_train_zero)
+plot_clsfr(c_test_zero)
