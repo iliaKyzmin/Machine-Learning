@@ -21,10 +21,10 @@ get_error <- function(eps) {
   return(MSE(preds, train_data$Y))
 }
 
-epsilons <- seq(0.08, 0.2, by = 0.02)
+epsilons <- seq(0.0, 0.4, by = 0.02)
 errors <- sapply(epsilons, get_error)
 
-plot(epsilons, errors, xlab = 'eps', ylab = 'error')
+plot(epsilons, errors, xlab = 'eps', ylab = 'error', 'l')
 
 
 plot_model <- function(eps) {
@@ -46,4 +46,4 @@ plot_model <- function(eps) {
 }
 
 plot_model(0.08)
-plot_model(0.2)
+plot_model(0.4)

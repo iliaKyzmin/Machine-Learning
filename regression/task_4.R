@@ -4,7 +4,7 @@ library('datasets')
 
 reg_data <- longley
 f = lm(Employed ~ ., data = reg_data)
-summary(f)
+summary(f)$r.squared
 
 # delete Population feature
 reg_data <- reg_data[, -5]
@@ -29,5 +29,5 @@ for (i in 0:25) {
   error_test[i + 1] <- mse(y_test, test_data$Employed)
 }
 
-plot(lambdas, error_train, 'o')
-plot(lambdas, error_test, 'o')
+plot(lambdas, error_train, 'o', xlab = 'lambda', ylab = 'train error')
+plot(lambdas, error_test, 'o', xlab = 'lambda', ylab = 'test error')

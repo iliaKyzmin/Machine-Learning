@@ -35,15 +35,26 @@ f5 <- lm(Quarter1 + Quarter2 + Quarter3 + Quarter4 ~ date, data = reg_data)
 
 predicted1 <- predict(f1, data.frame(date = 2016))
 print(paste0('Quarter 1 - ', predicted1))
+plot(reg_data$date, reg_data$Quarter1, 'l', col = 'green', xlab = 'Time', ylab = 'Quarter 1')
+lines(reg_data$date, reg_data$date * f1$coefficients[2] + f1$coefficients[1], 'l')
 
 predicted2 <- predict(f2, data.frame(date = 2016))
 print(paste0('Quarter 2 - ', predicted2))
+plot(reg_data$date, reg_data$Quarter2, 'l', col = 'red', xlab = 'Time', ylab = 'Quarter 2')
+lines(reg_data$date, reg_data$date * f2$coefficients[2] + f2$coefficients[1], 'l')
 
 predicted3 <- predict(f3, data.frame(date = 2016))
 print(paste0('Quarter 3 - ', predicted3))
+plot(reg_data$date, reg_data$Quarter3, 'l', col = 'blue', xlab = 'Time', ylab = 'Quarter 3')
+lines(reg_data$date, reg_data$date * f3$coefficients[2] + f3$coefficients[1], 'l')
 
 predicted4 <- predict(f4, data.frame(date = 2016))
 print(paste0('Quarter 4 - ', predicted4))
+plot(reg_data$date, reg_data$Quarter4, 'l', col = 'yellow', xlab = 'Time', ylab = 'Quarter 4')
+lines(reg_data$date, reg_data$date * f4$coefficients[2] + f4$coefficients[1], 'l')
 
 predicted5 <- predict(f5, data.frame(date = 2016))
 print(paste0('Year - ', predicted5))
+plot(reg_data$date, reg_data$Quarter1 + reg_data$Quarter2 + reg_data$Quarter3 + reg_data$Quarter4, 
+     'l', col = 'grey', xlab = 'Time', ylab = 'Year')
+lines(reg_data$date, reg_data$date * f5$coefficients[2] + f5$coefficients[1], 'l')

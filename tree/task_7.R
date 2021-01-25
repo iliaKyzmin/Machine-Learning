@@ -12,7 +12,7 @@ test_ids <- test_data$PassengerId
 
 train_data <- subset(train_data, select = -c(PassengerId, Name, Cabin, Ticket))
 test_data <- subset(test_data, select = -c(PassengerId, Name, Cabin, Ticket))
-
+train_data$Survived <- factor(train_data$Survived)
 
 fill_age_na <- function(some_data) {
   ages_nas <- is.na(some_data$Age)
@@ -49,7 +49,8 @@ train_data$Embarked[is.na(train_data$Embarked)] <- Mode(train_data$Embarked, na.
 
 
 model <- tree(Survived ~ ., data = train_data)
-predicted <- as.integer(predict(model, test_data) > 0.5)
+predicted <- apply(predict(model, test_data), 1, function(row) {which.max(row) - 1})
+draw.tree(model, cex = 0.7)
 
 result <- data.frame(PassengerId = test_ids, Survived = predicted)
 write.csv(result,'output/submission.csv', row.names=FALSE)

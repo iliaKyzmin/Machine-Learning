@@ -11,7 +11,7 @@ for (j in 1:4) {
     if(j == 4)
       tmp <- data.frame(reg_data$y, combination[1, i], combination[2, i], combination[3, i], combination[4, i])
     
-    res <- lm(tmp$reg_data.y ~., data = tmp)
-    print(sum((tmp$reg_data.y - res$fitted.values)^2))
+    f <- lm(tmp$reg_data.y ~., data = tmp)
+    print(sum((tmp$reg_data.y - f$fitted.values)^2))
   }
 }

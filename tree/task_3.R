@@ -6,6 +6,7 @@ library(Metrics)
 
 data(nsw74psid1)
 
+set.seed(12345)
 all_data <- nsw74psid1[order(runif(nrow(nsw74psid1))), ]
 nt <- as.integer(nrow(all_data) * 0.8)
 train_data <- all_data[1:nt, ]
@@ -22,6 +23,8 @@ count_error <- function(model, test_data) {
   predicted <- predict(model, test_data)
   return(mse(predicted, test_data$re78))
 }
+
+draw.tree(tree_model, cex = 0.7)
 
 print(paste0('Tree error - ', count_error(tree_model, test_data)))
 print(paste0('SVM error - ', count_error(svm_model, test_data)))

@@ -5,6 +5,7 @@ data("Glass")
 all_data <- Glass[, -1]
 
 model <- tree(Type ~ ., data = all_data)
+draw.tree(model, cex = 0.5)
 print(predict(model, data.frame(RI = 1.516, 
                                 Na = 11.7, 
                                 Mg = 1.01, 
